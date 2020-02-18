@@ -9,8 +9,8 @@ export class HttpService {
 
   constructor( private http:HttpClient ) { }
 
-  signup()
+  signup(value)
   {
-    
+    console.log(value);
   }
 }

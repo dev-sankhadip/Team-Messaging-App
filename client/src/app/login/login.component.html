@@ -1,0 +1,22 @@
+<div class="container" style="margin-top: 15px;">
+    <h1 class="display-4" style="text-align: center;">Login Here</h1>
+    <form [formGroup]="loginForm" (ngSubmit)="submit()">
+        <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Username</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Username" formControlName="username">
+        </div>
+          
+        <div class="input-group input-group-sm">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Password</span>
+            </div>
+            <input type="password" class="form-control" placeholder="your password" formControlName="password">
+        </div>
+        <div class="mt-3">
+            <button class="btn btn-sm bg-dark text-light" type="submit">Submit</button>
+        </div>
+    </form>
+    <span>Dont't have account </span><span style="color: chocolate; font-weight: bold;" (click)="goSignup()">Signup here</span>
+</div>

@@ -3,6 +3,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router'
 
 import { HttpService } from '../service/http.service'
+import { passwordValidator } from '../validators/passwordValidator';
+
+
 
 @Component({
   selector: 'app-signup',
@@ -17,7 +20,7 @@ export class SignupComponent implements OnInit {
     username:new FormControl('',[Validators.required]),
     email:new FormControl('',[Validators.required, Validators.email]),
     region:new FormControl('',[Validators.required]),
-    password:new FormControl('',[Validators.required])
+    password:new FormControl('',[Validators.required, passwordValidator])
   })
 
 
@@ -27,7 +30,17 @@ export class SignupComponent implements OnInit {
 
   submit()
   {
-    console.log(this.signupForm.value)
+    this.UserService.signup(this.signupForm.value);
+  }
+
+  goLogin()
+  {
+    this.router.navigate(['login'])
+  }
+
+  get password()
+  {
+    return this.signupForm.get('password');
   }
 
 }
