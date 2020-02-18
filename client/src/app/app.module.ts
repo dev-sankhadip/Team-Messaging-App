@@ -13,13 +13,13 @@ import { SignupComponent } from './signup/signup.component';
     AppComponent,
     LoginComponent,
     SignupComponent,
-    HttpClientModule,
-    ReactiveFormsModule,
-    FormsModule
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
