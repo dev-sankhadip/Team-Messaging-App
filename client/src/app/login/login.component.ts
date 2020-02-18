@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
 
   submit()
   {
-    console.log(this.loginForm.value);
+    this.UserService.login(this.loginForm.value);
   }
 
   goSignup()

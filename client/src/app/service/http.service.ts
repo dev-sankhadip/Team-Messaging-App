@@ -13,4 +13,9 @@ export class HttpService {
   {
     console.log(value);
   }
+
+  login(value)
+  {
+    console.log(value);
+  }
 }
