@@ -1,5 +1,5 @@
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound
 from .models import UserModel
 import json
 
@@ -10,10 +10,18 @@ import json
 def login(request):
     if request.method=='POST':
         values=json.loads(request.body.decode('utf-8'))
-        print(values['email'])
-        return HttpResponse('hello')
+        username=values['username']
+        password=values['password']
+        try:
+            user=UserModel.objects.get(username=username)
+            if user.password==password:
+                return HttpResponse(status=200)
+            else:
+                return HttpResponse(status=401)
+        except Exception as e:
+            return HttpResponseNotFound()
     else:
-        return HttpResponseBadRequest('<p>Methods not allowed</p>')
+        return HttpResponseBadRequest('<p>Not allowed</p>')
 
 
 @csrf_exempt
@@ -28,4 +36,4 @@ def signup(request):
         newUser.save()
         return HttpResponse(status=201)
     else:
-        return HttpResponseBadRequest('<p>Method not allowed</p>')
+        return HttpResponseBadRequest('<p>Not allowed</p>')
