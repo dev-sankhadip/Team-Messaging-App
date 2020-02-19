@@ -23,7 +23,14 @@ export class LoginComponent implements OnInit {
 
   submit()
   {
-    this.UserService.login(this.loginForm.value);
+    this.UserService.login(this.loginForm.value)
+    .subscribe((res)=>
+    {
+      console.log(res);
+    },(err)=>
+    {
+      console.log(err);
+    })
   }
 
   goSignup()

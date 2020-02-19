@@ -13,20 +13,11 @@ export class HttpService {
 
   signup(value)
   {
-    console.log(value);
-    this.http.post(this.url+'/user/signup',value)
-    .subscribe((res)=>
-    {
-      console.log(res);
-    },(err)=>
-    {
-      console.log(err);
-    })
+    return this.http.post(this.url+'/user/signup',value)
   }
 
   login(value)
   {
-    console.log(value);
-    this.http.post(this.url+'/user/login',{value})
+    return this.http.post(this.url+'/user/login',value)
   }
 }

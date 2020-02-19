@@ -30,7 +30,14 @@ export class SignupComponent implements OnInit {
 
   submit()
   {
-    this.UserService.signup(this.signupForm.value);
+    this.UserService.signup(this.signupForm.value)
+    .subscribe((res)=>
+    {
+      console.log(res);
+    },(err)=>
+    {
+      console.log(err);
+    })
   }
 
   goLogin()
