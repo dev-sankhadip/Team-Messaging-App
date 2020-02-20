@@ -31,7 +31,8 @@ export class UserComponent implements OnInit {
           name:room[1],
           tags:room[2]
         }
-        this.rooms.push(roomDetails)        
+        this.rooms.push(roomDetails)
+        console.log(this.rooms)     
       })
     },(err)=>
     {
