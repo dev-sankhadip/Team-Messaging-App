@@ -24,17 +24,28 @@ def createRoom(request):
     # get username after verification
     username=getUsername(email)
 
-    # get roomname and tags
-    room=values['roomName']
-    tag=values['roomTags']
-    tags=tag.split(',')
-    roomid=generateRandomString()
-    createtion_date =' '.join(today.strftime("%B %d, %Y").split(','))
-    member="{"+username+"}";
-
-    # insert values into database
-    cursor.execute(f"insert into room values('{roomid}', '{username}', '{createtion_date}', '{member}')")
-    return HttpResponse(status=200)
+    # if user exists
+    if username:
+        # get roomname and tags
+        room=values['roomName']
+        tag=values['roomTags']
+        tags=','.join(tag.split(','))
+        tags='{'+tags+'}'
+        roomid=generateRandomString()
+        createtion_date =' '.join(today.strftime("%B %d, %Y").split(','))
+        member="{"+username+"}";
+        # insert values into database
+        try:
+            cursor.execute(f"insert into room values('{roomid}', '{username}', '{createtion_date}', '{member}', '{room}','{tags}')")
+            data={
+                    'status':'200',
+                    'roomid':f'{roomid}',
+            }
+            return JsonResponse(data)
+        except:
+            return HttpResponse(status=500)
+    else:
+        return HttpResponse(status=400)
 
 
 def generateRandomString():
@@ -42,3 +53,22 @@ def generateRandomString():
     res = ''.join(random.choices(string.ascii_uppercase + string.digits, k = N))
     print(res)
     return res
+
+@csrf_exempt
+def sendRooms(request):
+        token=request.headers['Authorization'].split("'")
+        # verify jwt token
+        email=checkJwt(token[1])
+        # get username after verification
+        username=getUsername(email)
+
+        try:
+            cursor.execute(f"select roomid,roomname,tags from room where '{username}'=any(members)")
+            rooms=cursor.fetchall()
+            data={
+                'rooms':rooms,
+            }
+            return JsonResponse(data)
+        except Exception as e:
+            print(e)
+            return HttpResponse(status=500)
