@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 @Injectable({
@@ -13,7 +13,8 @@ export class HttpService {
 
   signup(value)
   {
-    return this.http.post(this.url+'/user/signup',value)
+    return this.http.post(this.url+'/user/signup',
+    value,{headers:new HttpHeaders({ 'Accept':'application/json','Content-Type':'application/json' })})
   }
 
   login(value)
