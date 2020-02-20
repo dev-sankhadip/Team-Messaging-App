@@ -23,7 +23,16 @@ export class UserComponent implements OnInit {
     this.service.getAllRooms()
     .subscribe((res)=>
     {
-      console.log(res);
+      console.log(res['rooms']);
+      res['rooms'].map((room)=>
+      {
+        let roomDetails={
+          id:room[0],
+          name:room[1],
+          tags:room[2]
+        }
+        this.rooms.push(roomDetails)        
+      })
     },(err)=>
     {
       console.log(err);
@@ -39,9 +48,10 @@ export class UserComponent implements OnInit {
       let roomDetails={
         id:res['roomid'],
         name:this.roomForm.value.roomName,
-        tags:this.roomForm.value.roomTags
+        tags:this.roomForm.value.roomTags.split(',')
       }
       this.rooms.push(roomDetails)
+      console.log(this.rooms);
     },(err)=>
     {
       console.log(err);
