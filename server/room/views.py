@@ -29,20 +29,24 @@ def createRoom(request):
         # get roomname and tags
         room=values['roomName']
         tag=values['roomTags']
-        tags=','.join(tag.split(','))
-        tags='{'+tags+'}'
+        tagList=tag.split(',')
+        tags=', '.join('"{0}"'.format(t) for t in tagList)
+        # print(tags)
+        # tags=','.join(tag.split(','))
+        tags="{"+tags+"}"
         roomid=generateRandomString()
         createtion_date =' '.join(today.strftime("%B %d, %Y").split(','))
         member="{"+username+"}";
         # insert values into database
         try:
-            cursor.execute(f"insert into room values('{roomid}', '{username}', '{createtion_date}', '{member}', '{room}','{tags}')")
+            cursor.execute(f"insert into room values('{roomid}', '{username}', '{createtion_date}', '{member}', '{room}', '{tags}')")
             data={
                     'status':'200',
                     'roomid':f'{roomid}',
             }
             return JsonResponse(data)
-        except:
+        except Exception as e:
+            print(e)
             return HttpResponse(status=500)
     else:
         return HttpResponse(status=400)
