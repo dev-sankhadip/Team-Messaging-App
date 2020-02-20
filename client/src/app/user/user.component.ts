@@ -17,16 +17,31 @@ export class UserComponent implements OnInit {
     roomTags:new FormControl('', Validators.required)
   })
 
+  public rooms=[]
+
   ngOnInit(): void {
+    this.service.getAllRooms()
+    .subscribe((res)=>
+    {
+      console.log(res);
+    },(err)=>
+    {
+      console.log(err);
+    })
   }
 
   create()
   {
-    console.log(this.roomForm.value);
     this.service.createRoom(this.roomForm.value)
     .subscribe((res)=>
     {
       console.log(res);
+      let roomDetails={
+        id:res['roomid'],
+        name:this.roomForm.value.roomName,
+        tags:this.roomForm.value.roomTags
+      }
+      this.rooms.push(roomDetails)
     },(err)=>
     {
       console.log(err);

@@ -15,4 +15,9 @@ export class RoomService {
   {
     return this.http.post(this.url+'/room/create',value);
   }
+
+  getAllRooms()
+  {
+    return this.http.get(this.url+"/room")
+  }
 }

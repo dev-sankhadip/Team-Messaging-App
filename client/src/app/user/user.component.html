@@ -20,86 +20,25 @@
 <div class="container mt-3">
     <h3 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">Your Labs</h3>
     <div class="row">
-        <div class="col-md-2">
-            <div class="card">
-                <div class="card-header">
-                    <p style="text-align: center; font-weight: bold; font-size: 20px;">MLTech</p>
-                </div>
-                <div class="card-body">
-                    <span style="margin-right: 5px; background-color:darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#ML</span>
-                    <span style="margin-right: 5px; background-color: darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#DL</span>
-                    <span style="margin-right: 5px; background-color: darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#Python</span>
-                    <span style="margin-right: 4px; background-color: darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#Javascript</span>
-                </div>
-            </div>
-        </div>
-        <!-- <div class="col-md-1"></div> -->
-        <div class="col-md-2">
-            <div class="card">
-                <div class="card-header">
-                    <p style="text-align: center; font-weight: bold; font-size: 20px;">MLTech</p>
-                </div>
-                <div class="card-body">
-                    <span style="margin-right: 5px; background-color:darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#ML</span>
-                    <span style="margin-right: 5px; background-color: darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#DL</span>
-                    <span style="margin-right: 5px; background-color: darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#Python</span>
-                    <span style="margin-right: 4px; background-color: darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#Javascript</span>
+        <ng-container *ngIf="rooms.length>0; then labBlock; else noLabBlock"></ng-container>
+        <ng-template #labBlock>
+            <div class="col-md-2">
+                <div class="card">
+                    <div class="card-header">
+                        <p style="text-align: center; font-weight: bold; font-size: 20px;">MLTech</p>
+                    </div>
+                    <div class="card-body">
+                        <span style="margin-right: 5px; background-color:darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#ML</span>
+                        <span style="margin-right: 5px; background-color: darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#DL</span>
+                        <span style="margin-right: 5px; background-color: darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#Python</span>
+                        <span style="margin-right: 4px; background-color: darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#Javascript</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- <div class="col-md-1"></div> -->
-        <div class="col-md-2">
-            <div class="card">
-                <div class="card-header">
-                    <p style="text-align: center; font-weight: bold; font-size: 20px;">MLTech</p>
-                </div>
-                <div class="card-body">
-                    <span style="margin-right: 5px; background-color:darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#ML</span>
-                    <span style="margin-right: 5px; background-color: darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#DL</span>
-                    <span style="margin-right: 5px; background-color: darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#Python</span>
-                    <span style="margin-right: 4px; background-color: darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#Javascript</span>
-                </div>
-            </div>
-        </div>
-        <!-- <div class="col-md-1"></div> -->
-        <div class="col-md-2">
-            <div class="card">
-                <div class="card-header">
-                    <p style="text-align: center; font-weight: bold; font-size: 20px;">MLTech</p>
-                </div>
-                <div class="card-body">
-                    <span style="margin-right: 5px; background-color:darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#ML</span>
-                    <span style="margin-right: 5px; background-color: darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#DL</span>
-                    <span style="margin-right: 5px; background-color: darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#Python</span>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2">
-            <div class="card">
-                <div class="card-header">
-                    <p style="text-align: center; font-weight: bold; font-size: 20px;">MLTech</p>
-                </div>
-                <div class="card-body">
-                    <span style="margin-right: 5px; background-color:darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#ML</span>
-                    <span style="margin-right: 5px; background-color: darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#DL</span>
-                    <span style="margin-right: 5px; background-color: darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#Python</span>
-                    <span style="margin-right: 4px; background-color: darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#Javascript</span>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2">
-            <div class="card">
-                <div class="card-header">
-                    <p style="text-align: center; font-weight: bold; font-size: 20px;">MLTech</p>
-                </div>
-                <div class="card-body">
-                    <span style="margin-right: 5px; background-color:darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#ML</span>
-                    <span style="margin-right: 5px; background-color: darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#DL</span>
-                    <span style="margin-right: 5px; background-color: darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#Python</span>
-                    <span style="margin-right: 4px; background-color: darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#Javascript</span>
-                </div>
-            </div>
-        </div>
+        </ng-template>
+        <ng-template #noLabBlock>
+            <p>You have not joined any lab. Create one</p>
+        </ng-template>
     </div>
 </div>
 
