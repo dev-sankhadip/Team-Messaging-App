@@ -1,5 +1,6 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, JsonResponse
+from django.db import connection
 from .models import UserModel
 import json,jwt
 
@@ -9,6 +10,10 @@ import json,jwt
 @csrf_exempt
 def login(request):
     if request.method=='POST':
+        # cursor=connection.cursor()
+        # cursor.execute('select * from user_usermodel')
+        # row=cursor.fetchone()
+        # print(row)
         values=json.loads(request.body.decode('utf-8'))
         username=values['username']
         password=values['password']
@@ -18,7 +23,7 @@ def login(request):
                 payload = {
                     'email': user.email,
                 }
-                jwt_token = jwt.encode(payload, "SECRET_KEY",algorithm='HS256')
+                jwt_token = jwt.encode(payload, "SECRET_KEY",algorithm='HS256',)
                 data={
                     'status':'200',
                     'token':f'{jwt_token}'

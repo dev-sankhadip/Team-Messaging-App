@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'channels',
     'chat',
+    'room.apps.RoomConfig',
     'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
