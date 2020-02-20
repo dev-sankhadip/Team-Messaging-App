@@ -11,6 +11,7 @@ import { UserComponent } from './user/user.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ChatComponent } from './chat/chat.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { HttpInterceptorService } from './service/http/http-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,9 @@ import { NavbarComponent } from './navbar/navbar.component';
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    { provide:HTTP_INTERCEPTORS, useClass:HttpInterceptorService, multi:true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
