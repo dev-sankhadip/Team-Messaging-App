@@ -37,7 +37,8 @@ export class ChatComponent implements OnInit {
       console.log(e);
       var data = JSON.parse(e.data);
       var message = data['message'];
-      document.querySelector('#chat-log').value += (message + '\n');
+      console.log(message);
+      // document.querySelector('#chat-log').value += (message + '\n');
     }
     this.chatSocket.onopen=function(e)
     {
@@ -50,9 +51,10 @@ export class ChatComponent implements OnInit {
 
   send()
   {
-    console.log(this.chatForm.value);
+    const token=window.localStorage.getItem("token");
     this.chatSocket.send(JSON.stringify({
-      'message':this.chatForm.value.message
+      'message':this.chatForm.value.message,
+      'token':token
     }))
     this.chatForm.reset()
   }
