@@ -55,7 +55,14 @@ def checkLoginStatus(request):
         username=getUsername(email)
         if username:
             print('valid')
-            return HttpResponse('ok', status=200)
+            data={
+                'status':200
+            }
+            return JsonResponse(data)
         else:
-            print('invalid')
-            return HttpResponse(status=401)
+            data={
+                'status':401
+            }
+            return JsonResponse(data)
+    else:
+        return HttpResponse(status=401)

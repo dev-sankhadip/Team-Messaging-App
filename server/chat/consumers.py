@@ -1,5 +1,8 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
 import json
+from user.jwt import checkJwt, getUsername
+import os
+
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -27,7 +30,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
         message = text_data_json['message']
 
         # Send message to room group
-        print(text_data_json['message'])
+        os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
+        token=text_data_json['token'].split("'")
+        email=checkJwt(token[1])
+        username=getUsername(email)
+        # print(username)
         await self.channel_layer.group_send(
             self.room_group_name,
             {
@@ -41,7 +48,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         message = event['message']
 
         # Send message to WebSocket
-        print(event);
         await self.send(text_data=json.dumps({
             'message': message
         }))

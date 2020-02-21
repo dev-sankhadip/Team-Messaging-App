@@ -31,8 +31,6 @@ def createRoom(request):
         tag=values['roomTags']
         tagList=tag.split(',')
         tags=', '.join('"{0}"'.format(t) for t in tagList)
-        # print(tags)
-        # tags=','.join(tag.split(','))
         tags="{"+tags+"}"
         roomid=generateRandomString()
         createtion_date =' '.join(today.strftime("%B %d, %Y").split(','))

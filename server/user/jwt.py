@@ -8,7 +8,13 @@ def checkJwt(token):
         return payload['email']
     except jwt.ExpiredSignatureError:
         print("Jwt expired")
+    except jwt.InvalidSignatureError:
+        print("JWT error");
 
 def getUsername(email):
-    user=UserModel.objects.get(email=f'{email}')
-    return user.username
+    try:
+        user=UserModel.objects.get(email=email)
+        return user.username
+    except Exception as e:
+        print(e)
+        print("User does not exist")
