@@ -26,11 +26,11 @@
                 <div class="col-md-2 mt-1">
                     <div class="card">
                         <div class="card-header">
-                            <p style="text-align: center; font-weight: bold; font-size: 20px;" routerLink="">{{ room.name }}</p>
+                            <p style="text-align: center; font-weight: bold; font-size: 20px;" (click)="goToRoom(room.id)">{{ room.name }}</p>
                         </div>
                         <div class="card-body">
                             <ng-container *ngFor="let tag of room.tags">
-                                <span style="margin-right: 5px; background-color:black; color: cornsilk; border-radius: 2px; padding: 2px;">#{{ tag }}</span>
+                                <span style="margin-right: 5px; background-color:crimson; color: cornsilk; border-radius: 2px; padding: 2px;">#{{ tag }}</span>
                             </ng-container>
                             <!-- <span style="margin-right: 5px; background-color: darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#DL</span>
                             <span style="margin-right: 5px; background-color: darksalmon; color: cornsilk; border-radius: 2px; padding: 2px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">#Python</span>

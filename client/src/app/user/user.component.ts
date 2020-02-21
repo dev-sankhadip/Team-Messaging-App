@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
+import { Router } from '@angular/router'
+
 
 import { RoomService } from '../service/room.service'
 
@@ -10,7 +12,7 @@ import { RoomService } from '../service/room.service'
 })
 export class UserComponent implements OnInit {
 
-  constructor( private service:RoomService ) { }
+  constructor( private service:RoomService, private router:Router ) { }
 
   roomForm=new FormGroup({
     roomName:new FormControl('', Validators.required),
@@ -23,7 +25,6 @@ export class UserComponent implements OnInit {
     this.service.getAllRooms()
     .subscribe((res)=>
     {
-      console.log(res['rooms']);
       res['rooms'].map((room)=>
       {
         let roomDetails={
@@ -45,7 +46,6 @@ export class UserComponent implements OnInit {
     this.service.createRoom(this.roomForm.value)
     .subscribe((res)=>
     {
-      console.log(res);
       let roomDetails={
         id:res['roomid'],
         name:this.roomForm.value.roomName,
@@ -59,4 +59,8 @@ export class UserComponent implements OnInit {
     })
   }
 
+  goToRoom(roomid)
+  {
+    this.router.navigate([`/room/${roomid}`])
+  }
 }
