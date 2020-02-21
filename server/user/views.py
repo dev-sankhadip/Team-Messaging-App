@@ -10,10 +10,6 @@ from .jwt import checkJwt, getUsername
 @csrf_exempt
 def login(request):
     if request.method=='POST':
-        # cursor=connection.cursor()
-        # cursor.execute('select * from user_usermodel')
-        # row=cursor.fetchone()
-        # print(row)
         values=json.loads(request.body.decode('utf-8'))
         username=values['username']
         password=values['password']
