@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFou
 from django.db import connection
 from .models import UserModel
 import json,jwt
-
+from .jwt import checkJwt, getUsername
 
 
 
@@ -50,3 +50,16 @@ def signup(request):
         return HttpResponse(status=201)
     else:
         return HttpResponseBadRequest('<p>Not allowed</p>')
+
+@csrf_exempt
+def checkLoginStatus(request):
+    if request.method=='GET':
+        token=request.headers['Authorization'].split("'")
+        email=checkJwt(token[1])
+        username=getUsername(email)
+        if username:
+            print('valid')
+            return HttpResponse('ok', status=200)
+        else:
+            print('invalid')
+            return HttpResponse(status=401)
