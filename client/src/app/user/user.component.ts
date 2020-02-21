@@ -33,7 +33,6 @@ export class UserComponent implements OnInit {
           tags:room[2]
         }
         this.rooms.push(roomDetails)
-        console.log(this.rooms)     
       })
     },(err)=>
     {

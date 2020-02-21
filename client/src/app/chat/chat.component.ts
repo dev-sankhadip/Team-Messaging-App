@@ -23,6 +23,11 @@ export class ChatComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.setSocket();
+  }
+
+  setSocket()
+  {
     this.id=this.route.snapshot.params['id'];
     console.log(this.id)
     this.chatSocket = new WebSocket('ws://' + this.socketURL + '/ws/chat/' + this.id + '/');
@@ -41,27 +46,6 @@ export class ChatComponent implements OnInit {
     this.chatSocket.onclose = function(e) {
       console.error('Chat socket closed unexpectedly');
     };
-
-  //   document.querySelector('#chat-message-submit').onclick = function(e) {
-  //     var messageInputDom = document.querySelector('#chat-message-input');
-  //     var message = messageInputDom.value;
-  //     chatSocket.send(JSON.stringify({
-  //         'message': message
-  //     }));
-
-  //     messageInputDom.value = '';
-  // };
-    // document.getElementById("chat-message-submit").onclick=function(e)
-    // {
-    //   const messageInputDom=document.getElementById("chat-message-input");
-    //   const message=messageInputDom.value;
-    //   socketCon.send(JSON.stringify({
-    //     'message':message
-    //   }))
-    //   messageInputDom.value='';
-    // }
-
-
   }
 
   send()
