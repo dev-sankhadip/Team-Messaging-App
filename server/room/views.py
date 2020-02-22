@@ -74,3 +74,35 @@ def sendRooms(request):
         except Exception as e:
             print(e)
             return HttpResponse(status=500)
+
+
+@csrf_exempt
+def chats(request):
+    values=json.loads(request.body.decode('utf-8'))
+    roomid=values['roomid']
+    token=request.headers['Authorization'].split("'")
+    email=checkJwt(token[1])
+    username=getUsername(email)
+    try:
+        cursor.execute(f"select * from chat where username='{username}' and roomid='{roomid}'")
+        chats=cursor.fetchall()
+        print(chats)
+    except Exception as e:
+        print(e)
+        print("Database error")
+    return HttpResponse(status=200)
+
+
+@csrf_exempt
+def checkInRoom(request):
+    values=json.loads(request.body.decode('utf-8'))
+    roomid=values['roomid']
+    
+    token=request.headers['Authorization'].split("'")
+    email=checkJwt(token[1])
+    username=getUsername(email)
+    
+    cursor.execute(f"select * from room where roomid='{roomid}' and '{username}'=any(members)")
+    isUser=cursor.fetchall()
+    print(isUser)
+    return HttpResponse(status=200)
