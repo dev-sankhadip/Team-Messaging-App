@@ -20,4 +20,14 @@ export class RoomService {
   {
     return this.http.get(this.url+"/room")
   }
+
+  getChats(roomid:String)
+  {
+    return this.http.post(this.url+'/room/chats',{roomid})
+  }
+
+  checkIfInRoom(roomid:String)
+  {
+    return this.http.post(this.url+'/room/checkroom',{roomid})
+  }
 }

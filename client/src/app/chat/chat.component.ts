@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import { FormGroup, FormControl } from '@angular/forms'
+import { RoomService } from '../service/room.service';
 
 
 
@@ -11,7 +12,7 @@ import { FormGroup, FormControl } from '@angular/forms'
 })
 export class ChatComponent implements OnInit {
 
-  constructor( private route:ActivatedRoute ) { }
+  constructor( private route:ActivatedRoute, private service:RoomService ) { }
 
   public id:String
   public chatSocket
@@ -23,12 +24,20 @@ export class ChatComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.id=this.route.snapshot.params['id'];
     this.setSocket();
+    this.service.getChats(this.id)
+    .subscribe((res)=>
+    {
+      console.log(res);
+    },(err)=>
+    {
+      console.log(err);
+    })
   }
 
   setSocket()
   {
-    this.id=this.route.snapshot.params['id'];
     console.log(this.id)
     this.chatSocket = new WebSocket('ws://' + this.socketURL + '/ws/chat/' + this.id + '/');
     let socketCon=this.chatSocket;
