@@ -17,6 +17,7 @@ export class ChatComponent implements OnInit {
   public id:String
   public chatSocket
   public socketURL='127.0.0.1:8000'
+  public isValid:boolean
 
   chatForm=new FormGroup({
     message:new FormControl('')
@@ -29,7 +30,8 @@ export class ChatComponent implements OnInit {
     this.service.checkIfInRoom(this.id)
     .subscribe((res1)=>
     {
-      console.log(res1)
+      // console.log(res1)
+      this.isValid=true
       this.service.getChats(this.id)
       .subscribe((res2)=>
       {
@@ -40,6 +42,7 @@ export class ChatComponent implements OnInit {
       })
     },(err)=>
     {
+      this.isValid=false
       console.log(err);
     })
   }

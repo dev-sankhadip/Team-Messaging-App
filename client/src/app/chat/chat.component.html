@@ -1,7 +1,13 @@
 <div class="container mt-2">
     <form [formGroup]="chatForm" (ngSubmit)="send()">
         <textarea id="chat-log" cols="100" rows="20"></textarea><br/>
-        <input id="chat-message-input" formControlName="message" type="text" size="100"/><br/>
-        <input id="chat-message-submit" class="mt-1" type="submit" value="Send"/>
+        <ng-container *ngIf="isValid; then showInputBlock; else addUserBlock; "></ng-container>
+        <ng-template #showInputBlock>
+            <input id="chat-message-input" formControlName="message" type="text" size="100"/><br/>
+            <input id="chat-message-submit" class="mt-1" type="submit" value="Send"/>
+        </ng-template>
+        <ng-template #addUserBlock>
+            <input class="mt-1" type="submit" value="Join room">
+        </ng-template>
     </form>
 </div>
