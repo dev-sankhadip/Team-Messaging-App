@@ -26,10 +26,18 @@ export class ChatComponent implements OnInit {
   ngOnInit(): void {
     this.id=this.route.snapshot.params['id'];
     this.setSocket();
-    this.service.getChats(this.id)
-    .subscribe((res)=>
+    this.service.checkIfInRoom(this.id)
+    .subscribe((res1)=>
     {
-      console.log(res);
+      console.log(res1)
+      this.service.getChats(this.id)
+      .subscribe((res2)=>
+      {
+        console.log(res2);
+      },(err)=>
+      {
+        console.log(err);
+      })
     },(err)=>
     {
       console.log(err);
@@ -38,12 +46,9 @@ export class ChatComponent implements OnInit {
 
   setSocket()
   {
-    console.log(this.id)
     this.chatSocket = new WebSocket('ws://' + this.socketURL + '/ws/chat/' + this.id + '/');
-    let socketCon=this.chatSocket;
     this.chatSocket.onmessage=function(e)
     {
-      console.log(e);
       var data = JSON.parse(e.data);
       var message = data['message'];
       console.log(message);
@@ -51,7 +56,7 @@ export class ChatComponent implements OnInit {
     }
     this.chatSocket.onopen=function(e)
     {
-      console.log(e);
+      console.log("Socket Connected");
     }
     this.chatSocket.onclose = function(e) {
       console.error('Chat socket closed unexpectedly');
@@ -63,7 +68,8 @@ export class ChatComponent implements OnInit {
     const token=window.localStorage.getItem("token");
     this.chatSocket.send(JSON.stringify({
       'message':this.chatForm.value.message,
-      'token':token
+      'token':token,
+      'roomid':this.id
     }))
     this.chatForm.reset()
   }
