@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, HttpResponseServerError
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
 import json
@@ -44,9 +44,9 @@ def createRoom(request):
             return JsonResponse(data)
         except Exception as e:
             print(e)
-            return HttpResponse(status=500)
+            return HttpResponseServerError("Server error")
     else:
-        return HttpResponse(status=400)
+        HttpResponseNotFound("User not found")
 
 
 def generateRandomString():
@@ -69,9 +69,9 @@ def sendRooms(request):
                 return JsonResponse(data)
             except Exception as e:
                 print(e)
-                return HttpResponse(status=500)
+                return HttpResponseServerError("Server error")
         else:
-            return HttpResponse(status=401)
+            return HttpResponseBadRequest("Unauthorised")
 
 
 @csrf_exempt
@@ -84,13 +84,13 @@ def chats(request):
         try:
             cursor.execute(f"select * from chat where username='{username}' and roomid='{roomid}'")
             chats=cursor.fetchall()
-            print(chats)
+            return JsonResponse({"status":200, "chats":chats})
         except Exception as e:
             print(e)
             print("Database error")
-        return HttpResponse(status=200)
+            return HttpResponseServerError("Server error")
     else:
-        return HttpResponse(status=401)
+        return HttpResponseBadRequest("Unauthorised")
 
 
 @csrf_exempt
@@ -104,10 +104,15 @@ def checkInRoom(request):
         try:
             cursor.execute(f"select * from room where roomid='{roomid}' and '{username}'=any(members)")
             isUser=cursor.fetchall()
-            logging.info(isUser)
-            return HttpResponse(status=200)
+            if len(isUser)>0:
+                data={
+                    'status':200
+                }
+                return JsonResponse(data)
+            else:
+                return HttpResponseBadRequest("Unauthorised")
         except Exception as e:
-            logging.error(e)
-            return HttpResponse(status=500)
+            print(e)
+            return HttpResponseServerError("Server error")
     else:
-        return HttpResponse(status=401)
+        return HttpResponseBadRequest("Unauthorised")

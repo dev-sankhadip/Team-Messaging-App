@@ -1,5 +1,5 @@
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, JsonResponse
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, JsonResponse, HttpResponseNotAllowed
 from django.db import connection
 from .models import UserModel
 import json,jwt
@@ -26,11 +26,11 @@ def login(request):
                 }
                 return JsonResponse(data)
             else:
-                return HttpResponse(status=401)
+                return HttpResponseBadRequest("Unauthorised")
         except Exception as e:
-            return HttpResponseNotFound()
+            return HttpResponseNotFound("User not found")
     else:
-        return HttpResponseBadRequest('<p>Not allowed</p>')
+        return HttpResponseNotAllowed('<p>Not allowed</p>')
 
 
 @csrf_exempt
@@ -45,7 +45,7 @@ def signup(request):
         newUser.save()
         return HttpResponse(status=201)
     else:
-        return HttpResponseBadRequest('<p>Not allowed</p>')
+        return HttpResponseNotAllowed('<p>Not allowed</p>')
 
 @csrf_exempt
 def checkLoginStatus(request):
@@ -64,4 +64,4 @@ def checkLoginStatus(request):
             }
             return JsonResponse(data)
     else:
-        return HttpResponse(status=401)
+        return HttpResponseNotAllowed("Not allowed")
