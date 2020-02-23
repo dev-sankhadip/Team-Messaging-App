@@ -6,6 +6,8 @@ import json
 import string
 import random
 from datetime import date
+import logging
+
 
 from user.jwt import checkJwt, getUsername
 
@@ -19,19 +21,16 @@ def createRoom(request):
     values=json.loads(request.body.decode('utf-8'))
     token=request.headers['Authorization'].split("'")
     
-    # verify jwt token
-    email=checkJwt(token[1])
-    # get username after verification
-    username=getUsername(email)
-
-    # if user exists
-    if username:
-        # get roomname and tags
+    username=checkJwt(token[1])
+    
+    if username!='error' or username!=None:
         room=values['roomName']
         tag=values['roomTags']
+
         tagList=tag.split(',')
         tags=', '.join('"{0}"'.format(t) for t in tagList)
         tags="{"+tags+"}"
+        
         roomid=generateRandomString()
         createtion_date =' '.join(today.strftime("%B %d, %Y").split(','))
         member="{"+username+"}";
@@ -59,21 +58,20 @@ def generateRandomString():
 @csrf_exempt
 def sendRooms(request):
         token=request.headers['Authorization'].split("'")
-        # verify jwt token
-        email=checkJwt(token[1])
-        # get username after verification
-        username=getUsername(email)
-
-        try:
-            cursor.execute(f"select roomid,roomname,tags from room where '{username}'=any(members)")
-            rooms=cursor.fetchall()
-            data={
-                'rooms':rooms,
-            }
-            return JsonResponse(data)
-        except Exception as e:
-            print(e)
-            return HttpResponse(status=500)
+        username=checkJwt(token[1])
+        if username!='error' or username!=None:
+            try:
+                cursor.execute(f"select roomid,roomname,tags from room where '{username}'=any(members)")
+                rooms=cursor.fetchall()
+                data={
+                    'rooms':rooms,
+                }
+                return JsonResponse(data)
+            except Exception as e:
+                print(e)
+                return HttpResponse(status=500)
+        else:
+            return HttpResponse(status=401)
 
 
 @csrf_exempt
@@ -81,16 +79,18 @@ def chats(request):
     values=json.loads(request.body.decode('utf-8'))
     roomid=values['roomid']
     token=request.headers['Authorization'].split("'")
-    email=checkJwt(token[1])
-    username=getUsername(email)
-    try:
-        cursor.execute(f"select * from chat where username='{username}' and roomid='{roomid}'")
-        chats=cursor.fetchall()
-        print(chats)
-    except Exception as e:
-        print(e)
-        print("Database error")
-    return HttpResponse(status=200)
+    username=checkJwt(token[1])
+    if username!='error' or username!=None:
+        try:
+            cursor.execute(f"select * from chat where username='{username}' and roomid='{roomid}'")
+            chats=cursor.fetchall()
+            print(chats)
+        except Exception as e:
+            print(e)
+            print("Database error")
+        return HttpResponse(status=200)
+    else:
+        return HttpResponse(status=401)
 
 
 @csrf_exempt
@@ -99,10 +99,15 @@ def checkInRoom(request):
     roomid=values['roomid']
     
     token=request.headers['Authorization'].split("'")
-    email=checkJwt(token[1])
-    username=getUsername(email)
-    
-    cursor.execute(f"select * from room where roomid='{roomid}' and '{username}'=any(members)")
-    isUser=cursor.fetchall()
-    print(isUser)
-    return HttpResponse(status=200)
+    username=checkJwt(token[1])
+    if username!='error' or username!=None:
+        try:
+            cursor.execute(f"select * from room where roomid='{roomid}' and '{username}'=any(members)")
+            isUser=cursor.fetchall()
+            logging.info(isUser)
+            return HttpResponse(status=200)
+        except Exception as e:
+            logging.error(e)
+            return HttpResponse(status=500)
+    else:
+        return HttpResponse(status=401)

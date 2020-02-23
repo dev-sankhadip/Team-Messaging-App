@@ -3,7 +3,7 @@ import json
 import os
 from django.db import connection
 from datetime import datetime, date
-
+import logging
 
 from user.jwt import checkJwt, getUsername
 from room.views import generateRandomString
@@ -36,23 +36,25 @@ class ChatConsumer(AsyncWebsocketConsumer):
     # Receive message from WebSocket
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
+
         message = text_data_json['message']
         roomid=text_data_json['roomid']
         creation_time = now.strftime("%H:%M")
         creation_date =' '.join(today.strftime("%B %d, %Y").split(','))
         creation_time_date=creation_time+' '+creation_date
+        
         os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
+        
         token=text_data_json['token'].split("'")
-        email=checkJwt(token[1])
-        username=getUsername(email)
-
-        # insert chats into database
-        chatid=generateRandomString()
-        try:
-            cursor.execute(f"insert into chat values('{chatid}','{roomid}','{username}','{message}','{creation_time_date}')")
-        except Exception as e:
-            print(e)
-            print("Insert exception")
+        username=checkJwt(token[1])
+        if username!='error':
+            # insert chats into database
+            chatid=generateRandomString()
+            try:
+                cursor.execute(f"insert into chat values('{chatid}','{roomid}','{username}','{message}','{creation_time_date}')")
+            except Exception as e:
+                print(e)
+                print("Insert exception")
 
 
         # Send message to room group

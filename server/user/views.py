@@ -51,10 +51,9 @@ def signup(request):
 def checkLoginStatus(request):
     if request.method=='GET':
         token=request.headers['Authorization'].split("'")
-        email=checkJwt(token[1])
-        username=getUsername(email)
-        if username:
-            print('valid')
+        username=checkJwt(token[1])
+        
+        if username!='error' or username!=None:
             data={
                 'status':200
             }
