@@ -46,7 +46,7 @@ export class ChatComponent implements OnInit {
     })
   }
 
-  getChats()
+  getChats():void
   {
     this.service.getChats(this.id)
     .subscribe((res2)=>
@@ -62,12 +62,12 @@ export class ChatComponent implements OnInit {
   setSocket()
   {
     this.chatSocket = new WebSocket('ws://' + this.socketURL + '/ws/chat/' + this.id + '/');
-    this.chatSocket.onmessage=function(e)
+    this.chatSocket.onmessage=(e)=>
     {
-      console.log(e);
       var data = JSON.parse(e.data);
       var message = data['message'];
-      console.log(message);
+      let chatArray=[this.getUsername(),message,this.getDateTime()];
+      this.chats.push(chatArray);
     }
     this.chatSocket.onopen=function(e)
     {
@@ -88,15 +88,21 @@ export class ChatComponent implements OnInit {
     return dateTime;
   }
 
+  getUsername():String
+  {
+    const username=window.localStorage.getItem("username");
+    return username;
+  }
+
   send()
   {
     const token=window.localStorage.getItem("token");
-    const username=window.localStorage.getItem('username');
+    // const username=window.localStorage.getItem('username');
     // const year=new Date().getFullYear();
     // const month=this.months[new Date().getMonth()];
     // const date=new Date().getDate();
     // const time=new Date().toLocaleTimeString();
-    let chatArray=[username,this.chatForm.value.message,this.getDateTime()];
+    let chatArray=[this.getUsername(),this.chatForm.value.message,this.getDateTime()];
     this.chats.push(chatArray);
     this.chatSocket.send(JSON.stringify({
       'message':this.chatForm.value.message,
@@ -107,7 +113,7 @@ export class ChatComponent implements OnInit {
     this.chatForm.reset()
   }
 
-  join()
+  join():void
   {
     this.service.joinRoom(this.id)
     .subscribe((res)=>
