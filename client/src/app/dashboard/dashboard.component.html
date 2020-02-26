@@ -1,1 +1,62 @@
 <app-navbar></app-navbar>
+
+<div class="container mt-3">
+    <h4 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">Top 5 Trending Labs</h4>
+    <div class="row">
+        <ng-container *ngIf="rooms.length>0; then labBlock; else noLabBlock"></ng-container>
+        <ng-template #labBlock>
+            <ng-container *ngFor="let room of rooms">
+                <div class="col-md-2 mt-1">
+                    <div class="card">
+                        <div class="card-header">
+                            <p style="text-align: center; font-weight: bold; font-size: 20px;" (click)="goToRoom(room[1])">{{ room[0] }}</p>
+                        </div>
+                        <div class="card-body">
+                                <ng-container *ngFor="let tag of room[2]">
+                                    <span style="margin-right: 5px; margin-top: 5px; background-color:brown; color: cornsilk; border-radius: 2px; padding: 4px;">{{ tag }}</span>
+                                </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-template>
+        <ng-template #noLabBlock>
+            <p>You have not joined any lab. Create one</p>
+        </ng-template>
+    </div>
+</div>
+
+<div class="container mt-3">
+    <h4 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">Top 5 Trending Labs</h4>
+    <div class="row">
+        <ng-container *ngIf="tag.length>0; then tagBlock; else noTagBlock;"></ng-container>
+        <ng-template #tagBlock>
+            <div class="col-md-12">
+                <ng-container *ngFor="let t of tag">
+                    <span style="margin-right: 5px;">{{ t[1] }}</span>
+                </ng-container>
+            </div>
+        </ng-template>
+        <ng-template #noTagBlock>
+            <p>No tags</p>
+        </ng-template>
+    </div>
+</div>
+
+
+<div class="container mt-3">
+    <h4 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">Top 5 Trending Labs</h4>
+    <div class="row">
+        <ng-container *ngIf="users.length>0; then userBlock; else noUserBlock;"></ng-container>
+        <ng-template #userBlock>
+            <div class="col-md-12">
+                <ng-container *ngFor="let user of users">
+                    <span style="margin-right: 5px;">{{ user[1] }}</span>
+                </ng-container>
+            </div>
+        </ng-template>
+        <ng-template #noUserBlock>
+            <p>No user</p>
+        </ng-template>
+    </div>
+</div>

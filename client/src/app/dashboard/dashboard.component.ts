@@ -14,13 +14,20 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.tags()
   }
+  
+  public tag=[];
+  public rooms=[];
+  public users=[];
 
   tags()
   {
     this.service.getTrending()
     .subscribe((res)=>
     {
-      console.log(res);
+      this.tag=res['tags'];
+      this.rooms=res['rooms']
+      this.users=res['users']
+      console.log(res)
     },(err)=>
     {
       console.log(err);
