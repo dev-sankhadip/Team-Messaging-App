@@ -82,7 +82,7 @@ def chats(request):
     username=checkJwt(token[1])
     if username!='error' or username!=None:
         try:
-            cursor.execute(f"select * from chat where username='{username}' and roomid='{roomid}'")
+            cursor.execute(f"select username, message, time from chat where username='{username}' and roomid='{roomid}'")
             chats=cursor.fetchall()
             return JsonResponse({"status":200, "chats":chats})
         except Exception as e:

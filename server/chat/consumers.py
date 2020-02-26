@@ -39,9 +39,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         message = text_data_json['message']
         roomid=text_data_json['roomid']
-        creation_time = now.strftime("%H:%M")
-        creation_date =' '.join(today.strftime("%B %d, %Y").split(','))
-        creation_time_date=creation_time+' '+creation_date
+        times=text_data_json['times']
+
+        # creation_time = now.strftime("%H:%M")
+        # creation_date =' '.join(today.strftime("%B %d, %Y").split(','))
+        # creation_time_date=creation_time+' '+creation_date
         
         os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
         
@@ -51,7 +53,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             # insert chats into database
             chatid=generateRandomString()
             try:
-                cursor.execute(f"insert into chat values('{chatid}','{roomid}','{username}','{message}','{creation_time_date}')")
+                cursor.execute(f"insert into chat values('{chatid}','{roomid}','{username}','{message}','{times}')")
             except Exception as e:
                 print(e)
                 print("Insert exception")
