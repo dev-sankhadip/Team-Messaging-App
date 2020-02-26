@@ -3,7 +3,7 @@
         <!-- <textarea id="chat-log" cols="100" rows="20">
 
         </textarea> -->
-        <div style="width: 915px; height: 480px; border: 2px solid grey; overflow: scroll;">
+        <div style="width: 915px; height: 480px; border: 2px solid grey; overflow-y: scroll;">
             <ng-container *ngFor="let chat of chats">
                 <span style="color: #6F6F6F;">{{ chat[0] | titlecase }}</span>&nbsp;&nbsp;<span style="color: #B3B3B3;">{{ chat[2] }}</span>
                 <p>-> {{ chat[1] }}</p>

@@ -19,6 +19,8 @@ export class ChatComponent implements OnInit {
   public socketURL='127.0.0.1:8000'
   public isValid:boolean
   public chats
+  public months=['Jan','Feb','Mar','Apr','May','June','July','Aug','Sep','Oct','Nov','Dec']
+
 
   chatForm=new FormGroup({
     message:new FormControl('')
@@ -70,14 +72,15 @@ export class ChatComponent implements OnInit {
   send()
   {
     const token=window.localStorage.getItem("token");
-    const date=new Date().toLocaleDateString();
+    const year=new Date().getFullYear();
+    const month=this.months[new Date().getMonth()];
+    const date=new Date().getDate();
     const time=new Date().toLocaleTimeString();
-    console.log(date);
-    console.log(time);
     this.chatSocket.send(JSON.stringify({
       'message':this.chatForm.value.message,
       'token':token,
-      'roomid':this.id
+      'roomid':this.id,
+      'times':time+' '+month+' '+date+', '+year
     }))
     this.chatForm.reset()
   }
