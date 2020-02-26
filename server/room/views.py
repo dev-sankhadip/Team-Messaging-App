@@ -139,18 +139,23 @@ def join_room(request):
 
 @csrf_exempt
 def trending(request):
-    try:
-        # get top trending tags
-        # cursor.execute('with tags as(select unnest(tags) as tagname from room) select count(tagname),tagname from tags group by tagname')
-        cursor.execute('with tags as(select unnest(tags) as tagname from room) select count(tagname),tagname from tags group by tagname order by count(tagname) desc')
-        tags=cursor.fetchall()
-        # get trending rooms
-        cursor.execute('select count(roomid), roomid from chat group by roomid order by count(roomid) desc')
-        rooms=cursor.fetchall()
-        # get trending username
-        cursor.execute('select count(username), username from chat group by username order by count(username) desc')
-        users=cursor.fetchall()
+        token=request.headers['Authorization'].split("'")
+        username=checkJwt(token[1])
+        if username!='error' or username!=None:
+            try:
+                # get top trending tags
+                # cursor.execute('with tags as(select unnest(tags) as tagname from room) select count(tagname),tagname from tags group by tagname')
+                cursor.execute('with tags as(select unnest(tags) as tagname from room) select count(tagname),tagname from tags group by tagname order by count(tagname) desc')
+                tags=cursor.fetchall()
+                # get trending rooms
+                cursor.execute('select count(roomid), roomid from chat group by roomid order by count(roomid) desc')
+                rooms=cursor.fetchall()
+                # get trending username
+                cursor.execute('select count(username), username from chat group by username order by count(username) desc')
+                users=cursor.fetchall()
 
-        return JsonResponse({ 'tags':tags,'rooms':rooms,'users':users })
-    except Exception as e:
-        return HttpResponseServerError("Server error");
+                return JsonResponse({ 'tags':tags,'rooms':rooms,'users':users })
+            except Exception as e:
+                return HttpResponseServerError("Server error")
+        else:
+            return HttpResponseBadRequest("Unauthorised")
