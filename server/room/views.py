@@ -141,17 +141,25 @@ def join_room(request):
 def trending(request):
         token=request.headers['Authorization'].split("'")
         username=checkJwt(token[1])
+        rooms=[]
         if username!='error' or username!=None:
             try:
                 # get top trending tags
                 # cursor.execute('with tags as(select unnest(tags) as tagname from room) select count(tagname),tagname from tags group by tagname')
                 cursor.execute('with tags as(select unnest(tags) as tagname from room) select count(tagname),tagname from tags group by tagname order by count(tagname) desc')
                 tags=cursor.fetchall()
+                
                 # get trending rooms
-                cursor.execute('select count(roomid), roomid from chat group by roomid order by count(roomid) desc')
-                rooms=cursor.fetchall()
+                # cursor.execute('select count(chat.roomid), chat.roomid, room.roomname from chat, room where chat.roomid=room.roomid group by chat.roomid, room.roomname order by count(chat.roomid) desc')
+                cursor.execute('select count(roomid), roomid from chat group by roomid order by count(roomid) desc limit 5')
+                roomsRows=cursor.fetchall()
+                for room in roomsRows:
+                    cursor.execute(f"select roomname, roomid, tags from room where roomid='{room[1]}'")
+                    row=cursor.fetchall()
+                    rooms.append(row[0])
+                
                 # get trending username
-                cursor.execute('select count(username), username from chat group by username order by count(username) desc')
+                cursor.execute('select count(username), username from chat group by username order by count(username) desc limit 5')
                 users=cursor.fetchall()
 
                 return JsonResponse({ 'tags':tags,'rooms':rooms,'users':users })
