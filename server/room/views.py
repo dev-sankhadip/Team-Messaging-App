@@ -82,7 +82,7 @@ def chats(request):
     username=checkJwt(token[1])
     if username!='error' or username!=None:
         try:
-            cursor.execute(f"select username, message, time from chat where username='{username}' and roomid='{roomid}'")
+            cursor.execute(f"select username, message, time from chat where roomid='{roomid}'")
             chats=cursor.fetchall()
             return JsonResponse({"status":200, "chats":chats})
         except Exception as e:
@@ -116,3 +116,21 @@ def checkInRoom(request):
             return HttpResponseServerError("Server error")
     else:
         return HttpResponseBadRequest("Unauthorised")
+
+
+@csrf_exempt
+def join_room(request):
+    values=json.loads(request.body.decode('utf-8'))
+    roomid=values['roomid']
+    token=request.headers['Authorization'].split("'")
+    username=checkJwt(token[1])
+    if username!='error' or username!=None:
+        try:
+            # update aa set b = array_append(b, 5) where a = 1
+            cursor.execute(f"update room set members=array_append(members,'{username}') where roomid = '{roomid}'")
+            return JsonResponse({'status':201})
+        except Exception as e:
+            print(e)
+            return HttpResponseServerError("Server error")
+    else:
+        HttpResponseBadRequest("Unauthorised")
