@@ -22,7 +22,8 @@ def login(request):
                 jwt_token = jwt.encode(payload, "SECRET_KEY",algorithm='HS256',)
                 data={
                     'status':'200',
-                    'token':f'{jwt_token}'
+                    'token':f'{jwt_token}',
+                    'username':f'{user.username}'
                 }
                 return JsonResponse(data)
             else:
