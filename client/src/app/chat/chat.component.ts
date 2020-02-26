@@ -72,10 +72,13 @@ export class ChatComponent implements OnInit {
   send()
   {
     const token=window.localStorage.getItem("token");
+    const username=window.localStorage.getItem('username');
     const year=new Date().getFullYear();
     const month=this.months[new Date().getMonth()];
     const date=new Date().getDate();
     const time=new Date().toLocaleTimeString();
+    let chatArray=[username,this.chatForm.value.message,time+' '+month+' '+date+', '+year];
+    this.chats.push(chatArray);
     this.chatSocket.send(JSON.stringify({
       'message':this.chatForm.value.message,
       'token':token,
