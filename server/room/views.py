@@ -146,7 +146,7 @@ def trending(request):
             try:
                 # get top trending tags
                 # cursor.execute('with tags as(select unnest(tags) as tagname from room) select count(tagname),tagname from tags group by tagname')
-                cursor.execute('with tags as(select unnest(tags) as tagname from room) select count(tagname),tagname from tags group by tagname order by count(tagname) desc')
+                cursor.execute('with tags as(select unnest(tags) as tagname from room) select count(tagname),tagname from tags group by tagname order by count(tagname) desc limit 5')
                 tags=cursor.fetchall()
                 
                 # get trending rooms
