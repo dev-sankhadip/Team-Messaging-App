@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import createRoom,sendRooms, chats, checkInRoom,join_room, most_tags
+from .views import createRoom,sendRooms, chats, checkInRoom,join_room, trending
 
 
 urlpatterns=[
@@ -8,5 +8,5 @@ urlpatterns=[
     path('chats', chats),
     path('checkroom',checkInRoom),
     path('join',join_room),
-    path('tags',most_tags)
+    path('tags',trending)
 ]
