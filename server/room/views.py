@@ -28,7 +28,7 @@ def createRoom(request):
         tag=values['roomTags']
 
         tagList=tag.split(',')
-        tags=', '.join('"{0}"'.format(t) for t in tagList)
+        tags=', '.join('"{0}"'.format(t.strip()) for t in tagList)
         tags="{"+tags+"}"
         
         roomid=generateRandomString()
@@ -134,3 +134,14 @@ def join_room(request):
             return HttpResponseServerError("Server error")
     else:
         HttpResponseBadRequest("Unauthorised")
+
+
+
+@csrf_exempt
+def most_tags(request):
+    try:
+        cursor.execute('with tags as(select unnest(tags) as tagname from room) select count(tagname),tagname from tags group by tagname')
+        rows=cursor.fetchall()
+        return JsonResponse({ 'values':rows })
+    except Exception as e:
+        return HttpResponseServerError("Server error");
