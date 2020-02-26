@@ -114,6 +114,7 @@ export class ChatComponent implements OnInit {
     .subscribe((res)=>
     {
       console.log(res);
+      this.isValid=true;
     },(err)=>
     {
       console.log(err);
