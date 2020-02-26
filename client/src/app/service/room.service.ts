@@ -30,4 +30,9 @@ export class RoomService {
   {
     return this.http.post(this.url+'/room/checkroom',{roomid})
   }
+
+  joinRoom(roomid:String)
+  {
+    return this.http.post(this.url+'/room/join',{roomid})
+  }
 }

@@ -33,19 +33,28 @@ export class ChatComponent implements OnInit {
     this.service.checkIfInRoom(this.id)
     .subscribe((res1)=>
     {
-      this.isValid=true
-      this.service.getChats(this.id)
-      .subscribe((res2)=>
-      {
-        console.log(res2);
-        this.chats=res2['chats'];
-      },(err)=>
-      {
-        console.log(err);
-      })
+      this.isValid=true;
+      this.getChats();
     },(err)=>
     {
       this.isValid=false
+      console.log(err);
+      if(err.error=='Unauthorised')
+      {
+        this.getChats();
+      }
+    })
+  }
+
+  getChats()
+  {
+    this.service.getChats(this.id)
+    .subscribe((res2)=>
+    {
+      console.log(res2);
+      this.chats=res2['chats'];
+    },(err)=>
+    {
       console.log(err);
     })
   }
@@ -58,7 +67,6 @@ export class ChatComponent implements OnInit {
       var data = JSON.parse(e.data);
       var message = data['message'];
       console.log(message);
-      // document.querySelector('#chat-log').value += (message + '\n');
     }
     this.chatSocket.onopen=function(e)
     {
@@ -86,5 +94,17 @@ export class ChatComponent implements OnInit {
       'times':time+' '+month+' '+date+', '+year
     }))
     this.chatForm.reset()
+  }
+
+  join()
+  {
+    this.service.joinRoom(this.id)
+    .subscribe((res)=>
+    {
+      console.log(res);
+    },(err)=>
+    {
+      console.log(err);
+    })
   }
 }
