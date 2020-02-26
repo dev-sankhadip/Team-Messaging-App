@@ -18,6 +18,7 @@ export class ChatComponent implements OnInit {
   public chatSocket
   public socketURL='127.0.0.1:8000'
   public isValid:boolean
+  public chats
 
   chatForm=new FormGroup({
     message:new FormControl('')
@@ -30,12 +31,12 @@ export class ChatComponent implements OnInit {
     this.service.checkIfInRoom(this.id)
     .subscribe((res1)=>
     {
-      // console.log(res1)
       this.isValid=true
       this.service.getChats(this.id)
       .subscribe((res2)=>
       {
         console.log(res2);
+        this.chats=res2['chats'];
       },(err)=>
       {
         console.log(err);
@@ -69,6 +70,10 @@ export class ChatComponent implements OnInit {
   send()
   {
     const token=window.localStorage.getItem("token");
+    const date=new Date().toLocaleDateString();
+    const time=new Date().toLocaleTimeString();
+    console.log(date);
+    console.log(time);
     this.chatSocket.send(JSON.stringify({
       'message':this.chatForm.value.message,
       'token':token,

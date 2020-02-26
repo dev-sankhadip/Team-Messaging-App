@@ -1,6 +1,15 @@
 <div class="container mt-2">
     <form [formGroup]="chatForm" (ngSubmit)="send()">
-        <textarea id="chat-log" cols="100" rows="20"></textarea><br/>
+        <!-- <textarea id="chat-log" cols="100" rows="20">
+
+        </textarea> -->
+        <div style="width: 915px; height: 480px; border: 2px solid grey; overflow: scroll;">
+            <ng-container *ngFor="let chat of chats">
+                <span style="color: #6F6F6F;">{{ chat[0] | titlecase }}</span>&nbsp;&nbsp;<span style="color: #B3B3B3;">{{ chat[2] }}</span>
+                <p>-> {{ chat[1] }}</p>
+            </ng-container>
+        </div>
+        <br/>
         <ng-container *ngIf="isValid; then showInputBlock; else addUserBlock; "></ng-container>
         <ng-template #showInputBlock>
             <input id="chat-message-input" formControlName="message" type="text" size="100"/><br/>
