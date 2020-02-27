@@ -6,11 +6,12 @@ import { UserComponent } from './user/user.component';
 import { ChatComponent } from './chat/chat.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { RouterGuardService } from './service/router-guard.service';
+import { LoginRouterGuardService } from './service/login-router-guard.service';
 
 
 const routes: Routes = [
-  { path:'', component:LoginComponent },
-  { path:'login', component:LoginComponent },
+  { path:'', component:LoginComponent, canActivate:[LoginRouterGuardService] },
+  { path:'login', component:LoginComponent, canActivate:[LoginRouterGuardService] },
   { path:'signup', component:SignupComponent },
   { path:'user', component:UserComponent,canActivate:[RouterGuardService] },
   { path:'room/:id', component:ChatComponent, canActivate:[RouterGuardService] },
