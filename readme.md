@@ -17,9 +17,9 @@
 
 * Open PgAdmin and create a Database <b>team<b>
 * Then create a table named <b>chat</b> and create column according following mentioned image
-* ![chat table image](https://raw.githubusercontent.com/dev-sankhadip/Team-Messaging-App/master/images/chat.png)
+* ![chat table image](https://github.com/dev-sankhadip/Team-Messaging-App/blob/master/images/chat.png)
 * Then create another table named <b>room</b> and create column according following mentioned image
-* ![room table image](https://raw.githubusercontent.com/dev-sankhadip/Team-Messaging-App/master/images/room.png)
+* ![room table image](https://github.com/dev-sankhadip/Team-Messaging-App/blob/master/images/room.png)
 
 
 ## Author
