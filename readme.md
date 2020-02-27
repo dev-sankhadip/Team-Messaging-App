@@ -15,10 +15,10 @@
 
 ### Linux user
 
-* Open PgAdmin and create a Database <b>team<b>
-* Then create a table named <b>chat</b> and create column according following mentioned image
+* Open PgAdmin and create a Database <b>team</b>
+* Then create a table named <b>chat</b> and create column according following mentioned image with same data type
 * ![chat table image](https://github.com/dev-sankhadip/Team-Messaging-App/blob/master/images/chat.png)
-* Then create another table named <b>room</b> and create column according following mentioned image
+* Then create another table named <b>room</b> and create column according following mentioned image with same data type
 * ![room table image](https://github.com/dev-sankhadip/Team-Messaging-App/blob/master/images/room.png)
 
 
