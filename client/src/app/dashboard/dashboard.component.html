@@ -27,13 +27,13 @@
 </div>
 
 <div class="container mt-3">
-    <h4 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">Top 5 Trending Labs</h4>
+    <h4 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">Top 5 Trending Tags</h4>
     <div class="row">
         <ng-container *ngIf="tag.length>0; then tagBlock; else noTagBlock;"></ng-container>
         <ng-template #tagBlock>
             <div class="col-md-12">
                 <ng-container *ngFor="let t of tag">
-                    <span style="margin-right: 5px;">{{ t[1] }}</span>
+                    <span style="margin-right: 5px; background-color: darkgoldenrod; color: white; padding: 5px; border-radius: 10%;">{{ t[1] }}</span>
                 </ng-container>
             </div>
         </ng-template>
@@ -45,13 +45,13 @@
 
 
 <div class="container mt-3">
-    <h4 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">Top 5 Trending Labs</h4>
+    <h4 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">Top 5 Trending Users</h4>
     <div class="row">
         <ng-container *ngIf="users.length>0; then userBlock; else noUserBlock;"></ng-container>
         <ng-template #userBlock>
             <div class="col-md-12">
                 <ng-container *ngFor="let user of users">
-                    <span style="margin-right: 5px;">{{ user[1] }}</span>
+                    <span style="margin-right: 5px; background-color: sienna; color: white; padding: 5px; border-radius: 10%;">{{ user[1] }}</span>
                 </ng-container>
             </div>
         </ng-template>

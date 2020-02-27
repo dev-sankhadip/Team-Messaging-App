@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'
+
+
 import { DashboardService } from '../service/dashboard.service'
 
 
@@ -9,7 +12,7 @@ import { DashboardService } from '../service/dashboard.service'
 })
 export class DashboardComponent implements OnInit {
 
-  constructor( private service:DashboardService ) { }
+  constructor( private service:DashboardService, private router:Router ) { }
 
   ngOnInit(): void {
     this.tags()
@@ -32,6 +35,11 @@ export class DashboardComponent implements OnInit {
     {
       console.log(err);
     })
+  }
+
+  goToRoom(roomid)
+  {
+    this.router.navigate([`/room/${roomid}`])
   }
 
 }
